@@ -1,21 +1,24 @@
 {
   "name": "@craftzdog/asciiquarium",
   "version": "1.0.0",
-  "description": "Asciiquarium v1.1                     by Kirk Baucom <kbaucom@schizoid.com>                           http://www.robobunny.com",
+  "description": "Enjoy the mysteries of the sea from the safety of your own terminal",
   "main": "asciiquarium.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cmatsuoka/asciiquarium.git"
+    "url": "git+https://github.com/craftzdog/asciiquarium-js.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Takuya Matsuyama <hi+claude@craftz.dog>",
+  "contributors": [
+    "Kirk Baucom <kbaucom@schizoid.com>"
+  ],
+  "license": "GPL-2.0-or-later",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/cmatsuoka/asciiquarium/issues"
+    "url": "https://github.com/craftzdog/asciiquarium-js/issues"
   },
-  "homepage": "https://github.com/cmatsuoka/asciiquarium#readme"
+  "homepage": "https://github.com/craftzdog/asciiquarium-js#readme"
 }

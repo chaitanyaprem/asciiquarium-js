@@ -1,12 +1,9 @@
 'use strict';
 
 const DEPTH = require('./depth');
-// Late-bind the dispatcher: requires us. We only read random.randomObject
-// inside sharkDeath, so a partial exports object during load is fine.
 const random = require('./random');
 
-function addShark(_old, anim) {
-  const sharkRight = `
+const SHARK_RIGHT = `
                               __
                              ( \`\\
   ,                          )   \`\\
@@ -18,7 +15,7 @@ function addShark(_old, anim) {
  ;.'         \`. ...----\`.___.',,,_______......---'
  '           '-'
 `;
-  const sharkLeft = `
+const SHARK_LEFT = `
                      __
                     /' )
                   /'   (                          ,
@@ -30,7 +27,7 @@ function addShark(_old, anim) {
    \`---......_______,,,\`.___.'----... .'         \`.;
                                      \`-\`           \`
 `;
-  const maskRight = `
+const MASK_RIGHT = `
 
 
 
@@ -43,7 +40,7 @@ function addShark(_old, anim) {
 
 
 `;
-  const maskLeft = `
+const MASK_LEFT = `
 
 
 
@@ -57,6 +54,11 @@ function addShark(_old, anim) {
 
 `;
 
+// Build a shark + its associated invisible `teeth` collider. Each shark
+// keeps a reference to its own teeth on `shark._teeth` so the death
+// callback only sweeps its own — important once multiple sharks can
+// coexist (e.g. summoned via the 's' key).
+function createShark(anim, deathCb) {
   const dir = Math.floor(Math.random() * 2);
   let x = -53;
   const y = Math.floor(Math.random() * Math.max(1, anim.height() - 19)) + 9;
@@ -65,7 +67,7 @@ function addShark(_old, anim) {
   let speed = 2;
   if (dir) { speed *= -1; x = anim.width() - 2; teethX = x + 9; }
 
-  anim.newEntity({
+  const teeth = anim.newEntity({
     type: 'teeth',
     shape: '*',
     position: [teethX, teethY, DEPTH.shark + 1],
@@ -73,22 +75,39 @@ function addShark(_old, anim) {
     physical: true,
   });
 
-  anim.newEntity({
+  const shark = anim.newEntity({
     type: 'shark',
-    color: dir ? maskLeft : maskRight,
-    shape: dir ? sharkLeft : sharkRight,
+    color: dir ? MASK_LEFT : MASK_RIGHT,
+    shape: dir ? SHARK_LEFT : SHARK_RIGHT,
     autoTrans: true,
     position: [x, y, DEPTH.shark],
     defaultColor: 'C',
     callbackArgs: [speed, 0, 0],
     dieOffscreen: true,
-    deathCb: sharkDeath,
+    deathCb,
   });
+  shark._teeth = teeth;
+  return shark;
 }
 
-function sharkDeath(_shark, anim) {
-  for (const t of anim.getEntitiesOfType('teeth')) anim.delEntity(t);
+// Random-rotation spawn: when this shark dies, fire off the next random
+// event.
+function addShark(_old, anim) {
+  createShark(anim, sharkDeath);
+}
+
+// Manual summon (e.g. 's' key): no follow-up random spawn.
+function summonShark(anim) {
+  createShark(anim, sharkCleanup);
+}
+
+function sharkCleanup(shark, anim) {
+  if (shark._teeth) anim.delEntity(shark._teeth);
+}
+
+function sharkDeath(shark, anim) {
+  sharkCleanup(shark, anim);
   random.randomObject(null, anim);
 }
 
-module.exports = { addShark, sharkDeath };
+module.exports = { addShark, summonShark, sharkDeath };

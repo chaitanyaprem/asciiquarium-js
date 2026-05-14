@@ -9,6 +9,7 @@ const { Animation } = require('./src/engine');
 const { addEnvironment, addCastle } = require('./src/environment');
 const { addAllSeaweed } = require('./src/seaweed');
 const { addAllFish } = require('./src/fish');
+const { addFishhook } = require('./src/fishhook');
 const { randomObject } = require('./src/random');
 
 function parseArgs(argv) {
@@ -79,6 +80,7 @@ function main() {
     if (k === '\x03' || k === 'q' || k === 'Q') quit();
     else if (k === 'r' || k === 'R') rebuild = true;
     else if (k === 'p' || k === 'P') paused = !paused;
+    else if (k === 'j' || k === 'J') addFishhook(null, anim);
   });
 
   process.stdout.on('resize', () => { rebuild = true; });

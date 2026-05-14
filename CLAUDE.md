@@ -85,7 +85,7 @@ Body-part placeholders in fish masks (digits → colors via `randColor()`):
 
 ## Controls
 
-`q` quit · `r` redraw (rebuild world) · `p` pause · `j` drop a fishhook · `SIGINT` clean exit · `resize` rebuilds.
+`q` quit · `r` redraw (rebuild world) · `p` pause · `j` drop a fishhook · `s` summon a shark · `SIGINT` clean exit · `resize` rebuilds.
 
 ## Known scope cuts from the Perl original
 

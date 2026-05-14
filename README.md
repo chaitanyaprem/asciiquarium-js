@@ -1,5 +1,7 @@
 # Asciiquarium (Node.js)
 
+![screenshot](./docs/screenshot.png)
+
 Enjoy the mysteries of the sea from the safety of your own terminal.
 
 This is a Node.js port of [Kirk Baucom's original Perl

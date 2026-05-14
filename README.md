@@ -5,8 +5,7 @@ Enjoy the mysteries of the sea from the safety of your own terminal.
 This is a Node.js port of [Kirk Baucom's original Perl
 `asciiquarium`](http://www.robobunny.com/projects/asciiquarium/) (v1.1), with
 new fish species backported from the Android live wallpaper by Claudio
-Matsuoka. The original Perl script and `README` are still in this repo for
-reference.
+Matsuoka.
 
 ## What's different from the Perl original
 
@@ -46,13 +45,13 @@ asciiquarium
 
 ### Controls
 
-| Key | Action |
-|-----|--------|
-| <kbd>q</kbd> | quit |
+| Key          | Action                        |
+| ------------ | ----------------------------- |
+| <kbd>q</kbd> | quit                          |
 | <kbd>r</kbd> | redraw (rebuild all entities) |
-| <kbd>p</kbd> | toggle pause |
-| <kbd>j</kbd> | drop a fishhook |
-| <kbd>s</kbd> | summon a shark |
+| <kbd>p</kbd> | toggle pause                  |
+| <kbd>j</kbd> | drop a fishhook               |
+| <kbd>s</kbd> | summon a shark                |
 
 ### Command-line arguments
 

@@ -1,0 +1,21 @@
+{
+  "name": "@craftzdog/asciiquarium",
+  "version": "1.0.0",
+  "description": "Asciiquarium v1.1                     by Kirk Baucom <kbaucom@schizoid.com>                           http://www.robobunny.com",
+  "main": "asciiquarium.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmatsuoka/asciiquarium.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cmatsuoka/asciiquarium/issues"
+  },
+  "homepage": "https://github.com/cmatsuoka/asciiquarium#readme"
+}

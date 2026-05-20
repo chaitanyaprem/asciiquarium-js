@@ -87,7 +87,7 @@ Body-part placeholders in fish masks (digits → colors via `randColor()`):
 
 System: `Ctrl+C` / `SIGINT` quit · `r` redraw · `p` pause · `resize` rebuilds. `q` is intentionally NOT a quit key (toddlers find it) — Ctrl+C is the only exit.
 
-Summon: `s` shark · `j` fishhook · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow a bubble).
+Summon: `s` shark · `j` fishhook · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow an extra-large 5-frame bubble — see `addBigBubble` in `src/bubble.js`).
 
 Case-insensitive. Most summoners' `deathCb` is `random.randomObject`, so each manual summon chains one extra random event when the creature leaves — intentional, gives more activity per keystroke. Exceptions: `s` uses `summonShark` (cleanup only, no chain) and `j`/`addFishhook` self-guards against duplicates.
 

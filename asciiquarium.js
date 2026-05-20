@@ -18,7 +18,7 @@ const { addDolphins } = require('./src/dolphins');
 const { addShip } = require('./src/ship');
 const { addBigFish } = require('./src/bigfish');
 const { addMonster } = require('./src/monster');
-const { addBubble } = require('./src/bubble');
+const { addBigBubble } = require('./src/bubble');
 const { randomObject } = require('./src/random');
 
 function parseArgs(argv) {
@@ -74,7 +74,7 @@ function bubbleBurst(anim) {
   if (fishes.length === 0) return;
   const shuffled = fishes.slice().sort(() => Math.random() - 0.5);
   const n = Math.min(6, shuffled.length);
-  for (let i = 0; i < n; i++) addBubble(shuffled[i], anim);
+  for (let i = 0; i < n; i++) addBigBubble(shuffled[i], anim);
 }
 
 function main() {

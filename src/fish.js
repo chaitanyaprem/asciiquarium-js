@@ -182,14 +182,6 @@ function fishCollision(fish, anim) {
       addSplat(anim, px, py, pz);
       fish.kill();
       break;
-    } else if (o.type === 'hook_point') {
-      // Lazy require to avoid a load-time cycle: fish ← fishhook ← random.
-      const fhook = require('./fishhook');
-      fhook.retract(o);
-      fhook.retract(fish);
-      for (const h of anim.getEntitiesOfType('fishhook')) fhook.retract(h);
-      for (const l of anim.getEntitiesOfType('fishline')) fhook.retract(l);
-      break;
     }
   }
 }

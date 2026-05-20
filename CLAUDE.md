@@ -22,7 +22,6 @@ src/
   whale.js               # whale + animated water spout (12-frame anim)
   monster.js             # old Loch-Ness-style 4-frame monster
   bigfish.js             # big_fish_1 (yellow, body-colored mask)
-  fishhook.js            # 3-entity fishhook (line + hook + hook_point) — random or 'j' key
   swan.js                # surface swan
   ducks.js               # 3-duck formation, looking-around frames
   dolphins.js            # 3-dolphin pod jumping in formation (path-cycle callback)
@@ -87,9 +86,9 @@ Body-part placeholders in fish masks (digits → colors via `randColor()`):
 
 System: `Ctrl+C` / `SIGINT` quit · `r` redraw · `p` pause · `resize` rebuilds. `q` is intentionally NOT a quit key (toddlers find it) — Ctrl+C is the only exit.
 
-Summon: `s` shark · `j` fishhook · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow an extra-large 5-frame bubble — see `addBigBubble` in `src/bubble.js`).
+Summon: `s` shark · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow an extra-large 5-frame bubble — see `addBigBubble` in `src/bubble.js`).
 
-Case-insensitive. Most summoners' `deathCb` is `random.randomObject`, so each manual summon chains one extra random event when the creature leaves — intentional, gives more activity per keystroke. Exceptions: `s` uses `summonShark` (cleanup only, no chain) and `j`/`addFishhook` self-guards against duplicates.
+Case-insensitive. Most summoners' `deathCb` is `random.randomObject`, so each manual summon chains one extra random event when the creature leaves — intentional, gives more activity per keystroke. Exception: `s` uses `summonShark` (cleanup only, no chain).
 
 Kids mode (`-k` / `--kids`): any key not in the summon table falls back to `randomObject` so every smash spawns something.
 
@@ -97,14 +96,6 @@ Kids mode (`-k` / `--kids`): any key not in the summon table falls back to `rand
 
 - Only the `add_old_fish` set (10 fish) is bundled. `-c` is accepted but visually identical to default.
 - `new_monster` and `big_fish_2` aren't ported.
-
-## Fishhook details
-
-- **Three entities**: `fishline` (50-line rope from off-screen above), `fishhook` (visible hook art, the falling green `o`/`||`), `hook_point` (invisible 4-line collider that does the catching). All three share one callback (`fishhookCallback`) that descends until `y + height < anim.height() * 0.75`, then parks.
-- **Catch**: `src/fish.js → fishCollision()` detects `hook_point` overlap and calls `fishhook.retract()` on the fish, point, hook, and line. `retract()` flips `_hooked = true` (so the callback now reels them upward) and, for the fish, also bumps its z to `waterGap2` so it visibly rides over the waves on the way up.
-- **Cleanup**: when the visible `fishhook` dies offscreen its `deathCb` (`fishhookGroupDeath`) sweeps the `hook_point` and `fishline` and calls `random.randomObject` to spawn the next random event.
-
-If you re-add any of these, follow the existing pattern: export an `addX` from a new file under `src/`, then register it in `src/random.js` (`RANDOM_OBJECTS`).
 
 ## Running
 

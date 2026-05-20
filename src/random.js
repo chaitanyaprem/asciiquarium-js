@@ -12,7 +12,6 @@ exports.randomObject = function randomObject(dead, anim) {
     require('./monster').addMonster,
     require('./bigfish').addBigFish,
     require('./shark').addShark,
-    require('./fishhook').addFishhook,
     require('./swan').addSwan,
     require('./ducks').addDucks,
     require('./dolphins').addDolphins,

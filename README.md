@@ -14,8 +14,8 @@ Matsuoka.
 - Rewritten in plain JavaScript for Node — **zero dependencies** (no
   `Term::Animation`, no `Curses`). Renders via raw ANSI escapes, so it runs
   anywhere Node does, including Windows terminals.
-- Press <kbd>j</kbd> to drop a fishhook on demand.
-- Press <kbd>s</kbd> to summon a shark.
+- Press <kbd>s</kbd> to summon a shark (and lots of other keys to summon other creatures — see Controls below).
+- Toddler-friendly: <kbd>q</kbd> is **not** a quit key; only <kbd>Ctrl</kbd>+<kbd>C</kbd> exits. Add `--kids` to make every unmapped key spawn something random.
 - Handles terminal `resize` by rebuilding the world.
 
 Most of the ASCII art is by Joan Stark; the rest is from the original
@@ -47,18 +47,30 @@ asciiquarium
 
 ### Controls
 
-| Key          | Action                        |
-| ------------ | ----------------------------- |
-| <kbd>q</kbd> | quit                          |
-| <kbd>r</kbd> | redraw (rebuild all entities) |
-| <kbd>p</kbd> | toggle pause                  |
-| <kbd>j</kbd> | drop a fishhook               |
-| <kbd>s</kbd> | summon a shark                |
+| Key                                | Action                                        |
+| ---------------------------------- | --------------------------------------------- |
+| <kbd>Ctrl</kbd>+<kbd>C</kbd>       | quit (only exit — <kbd>q</kbd> is disabled)   |
+| <kbd>r</kbd>                       | redraw (rebuild all entities)                 |
+| <kbd>p</kbd>                       | toggle pause                                  |
+| <kbd>s</kbd>                       | summon a shark                                |
+| <kbd>d</kbd>                       | send in ducks                                 |
+| <kbd>w</kbd>                       | summon a whale                                |
+| <kbd>n</kbd>                       | send a swan gliding by                        |
+| <kbd>k</kbd>                       | send a jumping dolphin pod                    |
+| <kbd>h</kbd>                       | sail a ship across                            |
+| <kbd>g</kbd>                       | spawn a big fish                              |
+| <kbd>m</kbd>                       | spawn a sea monster                           |
+| <kbd>f</kbd>                       | add an extra fish                             |
+| <kbd>b</kbd>                       | bubble burst — up to 6 fish blow big bubbles  |
+
+All summon keys are case-insensitive.
 
 ### Command-line arguments
 
 - `-c` — "classic" mode (accepted for compatibility; visually identical to
   default in this port, which currently ships only the classic fish set).
+- `-k` / `--kids` — toddler mode: every key not listed above spawns a random
+  creature, so keyboard-smashing always produces something fun.
 
 ## License
 

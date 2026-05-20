@@ -54,11 +54,13 @@ ygcgwwwww  ygcgwwwww  ygcgwwwww
 `;
 
 function addDucks(_old, anim) {
+  if (anim.getEntitiesOfType('duck').length >= 2) return;
   const dir = Math.floor(Math.random() * 2);
   const speed = dir ? -1 : 1;
   const x = dir ? anim.width() - 2 : -30;
 
   anim.newEntity({
+    type: 'duck',
     shape: dir ? DUCK_LEFT : DUCK_RIGHT,
     autoTrans: true,
     color: dir ? MASK_LEFT : MASK_RIGHT,

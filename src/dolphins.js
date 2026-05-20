@@ -49,6 +49,7 @@ const MASK_LEFT = `
 `;
 
 function addDolphins(_old, anim) {
+  if (anim.getEntitiesOfType('dolphin').length >= 2) return;
   const dir = Math.floor(Math.random() * 2);
   let speed = 1;
   let distance = 15;
@@ -89,6 +90,7 @@ function addDolphins(_old, anim) {
   d2._path = path; d2._phase = 12; d2._tick = 0;
 
   const d1 = anim.newEntity({
+    type: 'dolphin',
     shape, autoTrans: true, color,
     position: [x, 5, DEPTH.waterGap3],
     callback: dolphinCallback,

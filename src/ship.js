@@ -4,6 +4,7 @@ const DEPTH = require('./depth');
 const random = require('./random');
 
 function addShip(_old, anim) {
+  if (anim.getEntitiesOfType('ship').length >= 1) return;
   const shipRight = `
      |    |    |
     )_)  )_)  )_)
@@ -40,6 +41,7 @@ yywwwyyyyyyyyyyyyyyyyyyyy
   let x = -24, speed = 1;
   if (dir) { speed *= -1; x = anim.width() - 2; }
   anim.newEntity({
+    type: 'ship',
     color: dir ? maskLeft : maskRight,
     shape: dir ? shipLeft : shipRight,
     autoTrans: true,

@@ -5,6 +5,7 @@ const random = require('./random');
 
 // Old-style 4-frame Loch-Ness style monster.
 function addMonster(_old, anim) {
+  if (anim.getEntitiesOfType('monster').length >= 1) return;
   const monsterRight = [
 `
                                                           ____
@@ -87,6 +88,7 @@ function addMonster(_old, anim) {
   const x = dir ? anim.width() - 2 : -64;
   const mask = dir ? maskLeft : maskRight;
   anim.newEntity({
+    type: 'monster',
     shape: dir ? monsterLeft : monsterRight,
     autoTrans: true,
     color: [mask, mask, mask, mask],

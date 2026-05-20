@@ -5,6 +5,7 @@ const random = require('./random');
 
 // 12-frame animation: 5 spoutless followed by 7 spout frames.
 function addWhale(_old, anim) {
+  if (anim.getEntitiesOfType('whale').length >= 1) return;
   const whaleRight = `
         .-----:
       .'       \`.
@@ -67,6 +68,7 @@ BBBB          BBBBB
   }
 
   anim.newEntity({
+    type: 'whale',
     color: masks,
     shape: frames,
     autoTrans: true,

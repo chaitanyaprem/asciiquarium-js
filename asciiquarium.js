@@ -8,17 +8,31 @@
 const { Animation } = require('./src/engine');
 const { addEnvironment, addCastle } = require('./src/environment');
 const { addAllSeaweed } = require('./src/seaweed');
-const { addAllFish } = require('./src/fish');
+const { addAllFish, addFish } = require('./src/fish');
 const { addFishhook } = require('./src/fishhook');
 const { summonShark } = require('./src/shark');
+const { addWhale } = require('./src/whale');
+const { addDucks } = require('./src/ducks');
+const { addSwan } = require('./src/swan');
+const { addDolphins } = require('./src/dolphins');
+const { addShip } = require('./src/ship');
+const { addBigFish } = require('./src/bigfish');
+const { addMonster } = require('./src/monster');
+const { addBubble } = require('./src/bubble');
 const { randomObject } = require('./src/random');
 
 function parseArgs(argv) {
-  const opts = { classic: false };
+  const opts = { classic: false, kids: false };
   for (const a of argv.slice(2)) {
     if (a === '-c') opts.classic = true;
+    else if (a === '-k' || a === '--kids') opts.kids = true;
     else if (a === '-h' || a === '--help') {
-      process.stdout.write('Usage: asciiquarium.js [-c]\n  -c  classic mode (1.0 species only)\n');
+      process.stdout.write(
+        'Usage: asciiquarium.js [-c] [-k|--kids]\n' +
+        '  -c          classic mode (1.0 species only)\n' +
+        '  -k --kids   toddler mode: every unmapped key spawns something random\n' +
+        '\nQuit with Ctrl+C (q is intentionally not a quit key).\n'
+      );
       process.exit(0);
     } else if (a === '-v' || a === '--version') {
       process.stdout.write('asciiquarium.js 1.1 (node port)\n');
@@ -52,8 +66,19 @@ function quit(msg) {
   process.exit(0);
 }
 
+// Pop a bubble out of up to 6 currently-alive fish simultaneously. Picking
+// different fish (rather than 6 from one) keeps the bubbles visually
+// separate without needing custom jitter.
+function bubbleBurst(anim) {
+  const fishes = anim.getEntitiesOfType('fish');
+  if (fishes.length === 0) return;
+  const shuffled = fishes.slice().sort(() => Math.random() - 0.5);
+  const n = Math.min(6, shuffled.length);
+  for (let i = 0; i < n; i++) addBubble(shuffled[i], anim);
+}
+
 function main() {
-  parseArgs(process.argv); // -c accepted but only classic art is bundled
+  const opts = parseArgs(process.argv); // -c accepted but only classic art is bundled
 
   setupTerminal();
   process.on('exit', restoreTerminal);
@@ -76,13 +101,35 @@ function main() {
     anim.redrawScreen();
   }
 
+  // Lowercase the keystroke once so each binding handles both cases.
+  // Ctrl+C (\x03) is always the escape hatch, including in kids mode.
   process.stdin.on('data', (key) => {
-    const k = key.toString();
-    if (k === '\x03' || k === 'q' || k === 'Q') quit();
-    else if (k === 'r' || k === 'R') rebuild = true;
-    else if (k === 'p' || k === 'P') paused = !paused;
-    else if (k === 'j' || k === 'J') addFishhook(null, anim);
-    else if (k === 's' || k === 'S') summonShark(anim);
+    const raw = key.toString();
+    if (raw === '\x03') quit();
+    const k = raw.toLowerCase();
+
+    // Bindings shared by both modes.
+    switch (k) {
+      case 'r': rebuild = true; return;
+      case 'p': paused = !paused; return;
+      case 'j': addFishhook(null, anim); return;
+      case 's': summonShark(anim); return;
+      case 'd': addDucks(null, anim); return;
+      case 'w': addWhale(null, anim); return;
+      case 'n': addSwan(null, anim); return;
+      case 'k': addDolphins(null, anim); return;
+      case 'h': addShip(null, anim); return;
+      case 'g': addBigFish(null, anim); return;
+      case 'm': addMonster(null, anim); return;
+      case 'f': addFish(null, anim); return;
+      case 'b': bubbleBurst(anim); return;
+    }
+
+    // 'q' is intentionally not a quit key — toddlers find it. Ctrl+C
+    // (\x03 / SIGINT) is the exit path. In kids mode, every other
+    // unmapped key triggers a random spawn so smashing is always rewarded.
+    if (k === 'q') return;
+    if (opts.kids) randomObject(null, anim);
   });
 
   process.stdout.on('resize', () => { rebuild = true; });

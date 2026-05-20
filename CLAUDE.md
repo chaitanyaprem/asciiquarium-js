@@ -85,7 +85,13 @@ Body-part placeholders in fish masks (digits → colors via `randColor()`):
 
 ## Controls
 
-`q` quit · `r` redraw (rebuild world) · `p` pause · `j` drop a fishhook · `s` summon a shark · `SIGINT` clean exit · `resize` rebuilds.
+System: `Ctrl+C` / `SIGINT` quit · `r` redraw · `p` pause · `resize` rebuilds. `q` is intentionally NOT a quit key (toddlers find it) — Ctrl+C is the only exit.
+
+Summon: `s` shark · `j` fishhook · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow a bubble).
+
+Case-insensitive. Most summoners' `deathCb` is `random.randomObject`, so each manual summon chains one extra random event when the creature leaves — intentional, gives more activity per keystroke. Exceptions: `s` uses `summonShark` (cleanup only, no chain) and `j`/`addFishhook` self-guards against duplicates.
+
+Kids mode (`-k` / `--kids`): any key not in the summon table falls back to `randomObject` so every smash spawns something.
 
 ## Known scope cuts from the Perl original
 

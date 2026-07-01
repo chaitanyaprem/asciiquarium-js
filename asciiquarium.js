@@ -89,6 +89,15 @@ function main() {
   let rebuild = true;
   const anim = new Animation();
 
+  const TICK_SPEEDS = [500, 300, 200, 150, 100, 75, 50];
+  let speedIdx = 3; // default: 150 ms
+  let tickTimer = null;
+
+  function startTick() {
+    if (tickTimer) clearInterval(tickTimer);
+    tickTimer = setInterval(tick, TICK_SPEEDS[speedIdx]);
+  }
+
   function build() {
     anim.updateTermSize();
     anim.removeAllEntities();
@@ -123,6 +132,18 @@ function main() {
       case 'b': bubbleBurst(anim); return;
     }
 
+    // Shift+Right = speed up, Shift+Left = slow down.
+    if (raw === '\x1b[1;2C') {
+      speedIdx = Math.min(speedIdx + 1, TICK_SPEEDS.length - 1);
+      startTick();
+      return;
+    }
+    if (raw === '\x1b[1;2D') {
+      speedIdx = Math.max(speedIdx - 1, 0);
+      startTick();
+      return;
+    }
+
     // 'q' is intentionally not a quit key — toddlers find it. Ctrl+C
     // (\x03 / SIGINT) is the exit path. In kids mode, every other
     // unmapped key triggers a random spawn so smashing is always rewarded.
@@ -138,7 +159,7 @@ function main() {
   };
 
   build();
-  setInterval(tick, 100);
+  startTick();
 }
 
 main();

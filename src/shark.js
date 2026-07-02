@@ -54,6 +54,29 @@ const MASK_LEFT = `
 
 `;
 
+const BABY_SHARK_LEFT = `
+      /"*._         _
+  .-*'\`    \`*-.._.-'/
+< * ))     ,       (
+  \`*-._\`._(__.--*"\`.\\
+`;
+const BABY_SHARK_RIGHT = `
+_         _.*\\
+\`-._..-*'    '\`*-.
+ )       ,     (( * >
+/.'"*--.__)_.'_.-*'
+`;
+const BABY_MASK_LEFT = `
+
+
+  W
+`;
+const BABY_MASK_RIGHT = `
+
+
+                  W
+`;
+
 // Build a shark + its associated invisible `teeth` collider. Each shark
 // keeps a reference to its own teeth on `shark._teeth` so the death
 // callback only sweeps its own — important once multiple sharks can
@@ -110,4 +133,36 @@ function sharkDeath(shark, anim) {
   random.randomObject(null, anim);
 }
 
-module.exports = { addShark, summonShark, sharkDeath };
+// Baby shark: smaller, harmless (no teeth collider), summoned with 'y'.
+function createBabyShark(anim, deathCb) {
+  const dir = Math.floor(Math.random() * 2);
+  let x = -22;                                   // art is ~21 cols wide
+  // Art is 4 rows tall; keep it fully under the waterline (surface ≈ y 9).
+  const y = Math.floor(Math.random() * Math.max(1, anim.height() - 13)) + 9;
+  let speed = 2.5;
+  if (dir) { speed *= -1; x = anim.width() - 2; }
+
+  anim.newEntity({
+    type: 'baby_shark',
+    color: dir ? BABY_MASK_LEFT : BABY_MASK_RIGHT,
+    shape: dir ? BABY_SHARK_LEFT : BABY_SHARK_RIGHT,
+    autoTrans: true,
+    position: [x, y, DEPTH.shark],
+    defaultColor: 'C',
+    callbackArgs: [speed, 0, 0],
+    dieOffscreen: true,
+    deathCb,
+  });
+}
+
+// Manual summon ('y' key). Chains one random event on death, matching the
+// other summoners (unlike 's', which only needs teeth cleanup).
+function summonBabyShark(anim) {
+  createBabyShark(anim, babySharkDeath);
+}
+
+function babySharkDeath(_baby, anim) {
+  random.randomObject(null, anim);
+}
+
+module.exports = { addShark, summonShark, sharkDeath, summonBabyShark };

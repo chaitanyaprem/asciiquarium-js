@@ -9,7 +9,7 @@ const { Animation } = require('./src/engine');
 const { addEnvironment, addCastle } = require('./src/environment');
 const { addAllSeaweed } = require('./src/seaweed');
 const { addAllFish, addFish } = require('./src/fish');
-const { summonShark } = require('./src/shark');
+const { summonShark, summonBabyShark } = require('./src/shark');
 const { addWhale } = require('./src/whale');
 const { addDucks } = require('./src/ducks');
 const { addSwan } = require('./src/swan');
@@ -121,6 +121,7 @@ function main() {
       case 'r': rebuild = true; return;
       case 'p': paused = !paused; return;
       case 's': summonShark(anim); return;
+      case 'y': summonBabyShark(anim); return;
       case 'd': addDucks(null, anim); return;
       case 'w': addWhale(null, anim); return;
       case 'n': addSwan(null, anim); return;

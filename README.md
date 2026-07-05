@@ -16,6 +16,7 @@ Matsuoka.
   anywhere Node does, including Windows terminals.
 - Press <kbd>s</kbd> to summon a shark (and lots of other keys to summon other creatures — see Controls below).
 - Toddler-friendly: <kbd>q</kbd> is **not** a quit key; only <kbd>Ctrl</kbd>+<kbd>C</kbd> exits. Add `--kids` to make every unmapped key spawn something random.
+- Gentle critters: <kbd>c</kbd> crab (scuttles along the seabed) · <kbd>t</kbd> turtle (paddle-swims through mid-water).
 - Handles terminal `resize` by rebuilding the world.
 
 Most of the ASCII art is by Joan Stark; the rest is from the original

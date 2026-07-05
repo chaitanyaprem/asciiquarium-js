@@ -10,6 +10,8 @@ const { addEnvironment, addCastle } = require('./src/environment');
 const { addAllSeaweed } = require('./src/seaweed');
 const { addAllFish, addFish } = require('./src/fish');
 const { summonShark, summonBabyShark } = require('./src/shark');
+const { addCrab } = require('./src/crab');
+// const { addTurtle } = require('./src/turtle'); // turtle.js is broken — skipped for now
 const { addWhale } = require('./src/whale');
 const { addDucks } = require('./src/ducks');
 const { addSwan } = require('./src/swan');
@@ -129,6 +131,8 @@ function main() {
       case 'h': addShip(null, anim); return;
       case 'g': addBigFish(null, anim); return;
       case 'm': addMonster(null, anim); return;
+      case 'c': addCrab(null, anim); return;
+      // case 't': addTurtle(null, anim); return; // turtle skipped — src/turtle.js is broken
       case 'f': addFish(null, anim); return;
       case 'b': bubbleBurst(anim); return;
     }

@@ -25,6 +25,8 @@ src/
   swan.js                # surface swan
   ducks.js               # 3-duck formation, looking-around frames
   dolphins.js            # 3-dolphin pod jumping in formation (path-cycle callback)
+  crab.js                # seabed scuttler, 2-frame leg animation
+  turtle.js              # mid-water flipper swimmer, 2-frame paddling anim
   random.js              # randomObject() dispatcher; wires all of the above
 ```
 
@@ -39,6 +41,7 @@ asciiquarium.js
  └── random.js          ─→ shark, ship, whale, monster, bigfish
                               ↑ each of these requires random.js back
                                 (circular — see below)
+ └── crab.js, turtle.js   ─→ depth, random
 ```
 
 **Circular-dep handling** (`random.js` ↔ random-object modules): the leaf modules each do `const random = require('./random')` at the top and read `random.randomObject` *inside* `addX()` calls. `random.js` attaches its exports via `exports.randomObject = …` (mutation, not reassignment) so the partial reference handed out during the circular load gets populated by the time `addX()` actually runs. Don't replace `module.exports = {…}` in `random.js` — it'll break the circle.
@@ -86,7 +89,7 @@ Body-part placeholders in fish masks (digits → colors via `randColor()`):
 
 System: `Ctrl+C` / `SIGINT` quit · `r` redraw · `p` pause · `resize` rebuilds. `q` is intentionally NOT a quit key (toddlers find it) — Ctrl+C is the only exit.
 
-Summon: `s` shark · `y` baby shark · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow an extra-large 5-frame bubble — see `addBigBubble` in `src/bubble.js`).
+Summon: `s` shark · `y` baby shark · `d` ducks · `w` whale · `n` swan · `k` dolphins · `h` ship · `g` big fish · `m` monster · `f` extra fish · `b` bubble burst (up to 6 random fish blow an extra-large 5-frame bubble — see `addBigBubble` in `src/bubble.js`) · `c` crab (scuttles along the seabed) · `t` turtle (paddle-swims through mid-water).
 
 Case-insensitive. Most summoners' `deathCb` is `random.randomObject`, so each manual summon chains one extra random event when the creature leaves — intentional, gives more activity per keystroke. Exception: `s` uses `summonShark` (cleanup only, no chain).
 
